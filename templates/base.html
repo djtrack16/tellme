@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load i18n %}
+{% load url from future %}
+<head>
+	{% block head %}
+	<title>{% block title %}{% endblock %}</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta description="Share or write stories with your friends." content="">
+
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/tellme.css" rel="stylesheet">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/tellme.js"></script>
+
+	{% comment %}
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    {% endcomment %}
+
+	{% endblock head %}
+
+	{% block extra_head %}
+	{% endblock extra_head %}
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <link href="{{ STATIC_URL }}css/ie.css" rel="stylesheet">
+    <![endif]-->
+</head>
+	<body>
+      	<div id="header">
+            <div class="pull-left">
+      		    <a id="logo" href="{% url 'core_home' %}"><img src="{{ STATIC_URL }}img/logo.png"/></a>
+            </div>
+      		<div id="session" class="pull-right">
+      			{% if user.is_authenticated %}
+      				<span>{{ user.username }}&nbsp<a href="{% url 'core_logout' %}" class="btn-samall btn-inverse">{% trans "Sign Out" %}</a></span>
+      			{% else %}
+      				<a href="{% url 'core_login' %}" class="btn-small btn-inverse">{% trans "Login" %}</a>
+      				<a href="{% url 'core_signup' %}" class="btn-small btn-inverse">{% trans "Sign Up" %}</a>
+      			{% endif %}
+      		</div>
+    	</div>
+		<div id="menubar">
+            <div class="pull-left">
+				<div class="menu">
+					<a class="menu-btn {% block m_home %}{% endblock %}" href="{% url 'core_home' %}">
+						<img src="{{ STATIC_URL }}img/sprite/book.png" />{% trans "Home" %}</a>
+					<a class="menu-btn {% block m_sharing %}{% endblock %}" href="{% url 'share_sharing' %}">
+						<img src="{{ STATIC_URL }}img/sprite/book.png" />{% trans "Sharing" %}</a>
+					<!--<a class="menu-btn {% block m_friends %}{% endblock %}" href="#">
+						<img src="{{ STATIC_URL }}img/sprite/friends.png"/>{% trans "Friends" %}</a>
+					<a class="menu-btn {% block m_community %}{% endblock %}" href="#">
+						<img src="{{ STATIC_URL }}img/sprite/community.png"/>{% trans "Community" %}</a>-->
+				</div>
+            </div>
+            <div class="pull-right">
+			    <div class="menu">
+					<!--<a class="menu-btn {% block m_papertrail %}{% endblock %}" href="#">
+						<img src="{{ STATIC_URL }}img/sprite/doc.png"/>{% trans "Papertrail" %}</a>-->
+					<a class="menu-btn {% block m_canvas %}{% endblock %}" href="{% url 'books_add_book' %}">
+						<!--<img src="{{ STATIC_URL }}img/sprite/doc.png"/>{% trans "New Book" %}</a>-->
+						{% trans "New Book" %}</a>
+					<!--<div id="search-form">
+						<input type="text" class="search-query-input" placeholder="{% trans 'Search' %}">
+					</div>-->
+				</div>
+			</div>
+		</div>
+	    <div id="content" class="container-fluid">
+			{% block content %}
+	    	{% endblock %}
+	    </div>
+	</body>
+</html>

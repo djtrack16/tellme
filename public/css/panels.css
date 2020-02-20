@@ -1,0 +1,170 @@
+#left-panel, #rigth-panel {
+	position: absolute;
+	min-height: 560px;
+	width: 280px;
+	background: white;
+	z-index: 5;
+}
+
+#left-panel {
+	left: 0;
+	border-right: 1px solid #F8F8F8;
+	-moz-box-shadow: 5px 0 10px -2px #CCC;
+	-webkit-box-shadow: 5px 0 10px -2px #CCC;
+	box-shadow: 5px 0 10px -2px #CCC;
+}
+
+#rigth-panel {
+	right: 0;
+	border-left: 1px solid #F8F8F8;
+	-moz-box-shadow: -5px 0 10px -2px #CCC;
+	-webkit-box-shadow: -5px 0 10px -2px #CCC;
+	box-shadow: -5px 0 10px -2px #CCC;
+}
+
+#middle-panel {
+	margin: 0;
+	margin-left: 280px;
+	width: auto;
+
+	position: relative;
+}
+
+#middle-panel #middle-panel-container {
+	width: 100%;
+}
+
+#left-panel h1, #rigth-panel h1 {
+	font-size: 20px;
+	line-height: 65px;
+	padding: 0 20px;
+	
+	background: #f8f8f8;
+	background: -moz-linear-gradient(top, #f8f8f8 0%, #efefef 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#efefef));
+	background: -webkit-linear-gradient(top, #f8f8f8 0%,#efefef 100%);
+	background: -o-linear-gradient(top, #f8f8f8 0%,#efefef 100%);
+	background: -ms-linear-gradient(top, #f8f8f8 0%,#efefef 100%);
+	background: linear-gradient(top, #f8f8f8 0%,#efefef 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#efefef',GradientType=0 );	
+}
+
+#left-panel h1 img {
+	top: -2px;
+	position: relative;
+	padding-right: 5px;
+}
+
+#left-panel .entry-list, #rigth-panel .friend-list {
+	padding: 20px;
+}
+
+#left-panel .entry-list .entry-title, #rigth-panel .friend-list .friend-name {
+	padding-left: 25px;
+	line-height: 35px;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+#left-panel .entry-list .entry-title {
+	background: url("../img/sprite/gray-doc.png") no-repeat left center;
+}
+#rigth-panel .friend-list .friend-name {
+	background: url("../img/sprite/gray-friends.png") no-repeat left center;
+}
+#rigth-panel .friend-list h4 {
+	margin-bottom: 12px;
+}
+
+#rigth-panel .friend-list .friend-name .unshare-icon,
+#left-panel .entry-list .entry-title .delete-icon {
+	float: right;
+	opacity: 0.3;
+	cursor: pointer;
+}
+
+.hide-panel-control {
+	position: absolute;
+	top: 50%;
+	cursor: pointer;
+}
+
+.delete-icon {
+	display: none;
+}
+
+#edit-entry-form {
+	display: none;
+}
+
+.edit-icon {
+	display: none;
+}
+
+.delete-book {
+	float: right;
+}
+
+#left-panel .hide-panel-control {
+	right: -17px;
+}
+
+#rigth-panel .hide-panel-control {
+	left: -17px;
+}
+
+#middle-panel #middle-top-panel {
+}
+
+#middle-panel #middle-top-panel .hideaway-wrap {
+	height: 32px;
+	width: 100%;
+	background: white;
+	border-bottom: 1px solid #F8F8F8;
+	-moz-box-shadow: 0px 3px 5px #CCCCCC;
+	-webkit-box-shadow: 0px 3px 5px #CCCCCC;
+	box-shadow: 0px 3px 5px #CCCCCC;
+}
+
+#middle-panel #middle-bottom-panel {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+#middle-panel #middle-bottom-panel .hideaway-wrap {
+	height: 220px;
+	background: white;
+	-moz-box-shadow: 0px -3px 5px #CCCCCC;
+	-webkit-box-shadow: 0px -3px 5px #CCCCCC;
+	box-shadow: 0px -3px 5px #CCCCCC;
+}
+
+#middle-panel .hide-panel-control {
+    position: relative;
+	left: 49%;
+	top: 0;
+}
+
+#middle-panel #middle-top-panel .hide-panel-control {
+	top: -2px;
+}
+
+#middle-panel #editor {
+	padding: 20px 50px;
+}
+#middle-panel #editor  #editor-form {
+	height: 100%;
+}
+.panel-actions {
+	text-align: center;
+	padding: 0 12px 10px;
+}
+.bottom-panel-actions {
+	position: absolute;
+	bottom: 0;
+	padding: 20px;
+}
+
+#middle-panel-container .tellmeSkin table.mceToolbar {
+	margin: 0 auto;
+}

@@ -1,0 +1,9 @@
+<li class="friend-name">{{ share.to_user.profile.get_full_name }}
+	<a href="{% url share_unshare %}" class="unshare-icon">
+		<i class="icon-remove"></i>
+		<input type="hidden" name="shared" value="{{ share.id }}">
+	</a>
+</li>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/unshare.js"></script>	
+

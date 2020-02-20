@@ -1,0 +1,43 @@
+{% extends "books/base.html" %}
+{% load i18n %}
+{% load core_tags %}
+
+{% block title %}{% trans entry.title %}{% endblock %}
+
+{% block content %}
+<div id="editor-wrap">
+	<div id="left-panel">
+		<div class="hideaway-wrap">
+			<h1><img src="{{ STATIC_URL }}img/sprite/black-book.png" />{{ book.title }}</h1>
+			<ul class="entry-list">
+				{% for entry in shared_entries %}
+					<li class="entry-title"><a href="{{ entry.get_absolute_view_url }}">{{ entry.title|truncatechars:30 }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<a class="hide-panel-control"><img src="{{ STATIC_URL }}img/right-arrow.png"/></a>
+	</div>
+	<div id="middle-panel">
+		<div id="middle-panel-container">
+			<div id="editor">
+				{% if entry %}
+			 	<textarea style="visibility: hidden;">{{ entry.body }}</textarea>
+			 	{% else %}
+			 		<div class="alert"><strong>{% trans "This book is empty" %}</strong></div>
+			 	{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+	<link href="{{ STATIC_URL }}css/panels.css" rel="stylesheet" type="text/css" media="screen">
+	<script type="text/javascript" src="{{ STATIC_URL }}js/editor-panels.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="{% url tinymce-js 'readonly_tellme_editor' %}"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-alert.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+{% endblock %}

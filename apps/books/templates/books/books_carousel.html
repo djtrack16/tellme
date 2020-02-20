@@ -1,0 +1,28 @@
+{% load core_tags %}
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/books-carousel.css"/>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.books-carousel').carousel();
+		$('.book-title').tooltip();
+	});
+</script>
+
+<div class="books-carousel">
+	<div class="carousel-left"></div>
+	<div class="carousel-rail">
+		<div class="carousel-wagon">
+			{% for book in books %}
+			<a href="{{ book.get_absolute_url }}">
+			<div class="carousel-item">
+				<span class="book-title" rel="tooltip" title="{{ book.title }}">{{ book.title|truncatechars:9 }}</span>
+			</div>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+	<div class="carousel-right"></div>
+</div>
+<div id="books-cover-tray-wrap"></div>
+<script type="text/javascript" src="{{ STATIC_URL }}js/carousel/carousel.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-tooltip.js"></script>

@@ -1,0 +1,59 @@
+{% extends "share/base.html" %}
+{% load i18n %}
+{% load core_tags %}
+
+{% block title %}{% trans "Sharing" %}{% endblock %}
+
+{% block m_sharing %}menu-btn-active{% endblock %}
+
+{% block content %}
+	<div class="container shared-section">
+		<div class="shared-list" id="shared_by_me">
+			<div class="shared-list-header">
+				<h4>{% trans "Shared by Me" %}</h4>
+				<h4>{% trans "With" %}</h4>
+			</div>
+			{% for share in shared_by_me %}
+			<div class="share-wrap">
+				<div class="{% if share.get_share.is_book %}book-shared{% else %}entry-shared{% endif %}">
+					<a href="{{ share.get_share.get_absolute_url }}">{{ share.get_share.title|truncatechars:20 }}</a>
+				</div>
+				<div class="shared-users-list">
+					<!-- this should link to the user's profile page. But we don't have that set up yet -->
+					<span>{{ share.to_user.profile.get_full_name }}</span>
+					<a href="{% url share_unshare %}" class="unshare-icon">
+						<i class="icon-remove"></i>
+						<input type="hidden" name="shared" value="{{ share.id }}">
+					</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		<div class="clearfix"></div>
+		<div class="shared-list" id="shared_with_me">
+			<div class="shared-list-header">
+				<h4>{% trans "Shared with Me" %}</h4>
+				<h4>{% trans "By" %}</h4>
+			</div>
+			{% for share in shared_with_me %}
+			<div class="share-wrap">
+				<div class="{% if share.get_share.is_book %}book-shared{% else %}entry-shared{% endif %}">
+					<a href="{{ share.get_share.get_absolute_view_url }}">{{ share.get_share.title|truncatechars:20 }}</a>
+				</div>
+				<div class="shared-users-list">
+					<span>{{ share.from_user.profile.get_full_name }}</span>
+					<a href="{% url share_unshare %}" class="unshare-icon">
+						<i class="icon-remove"></i>
+						<input type="hidden" name="shared" value="{{ share.id }}">
+					</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block extra_head %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/unshare.js"></script>	
+{% endblock %}

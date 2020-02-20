@@ -1,0 +1,30 @@
+{% load core_tags %}
+
+<link href="{{ STATIC_URL }}css/latest-entries-big-carousel.css" rel="stylesheet" type="text/css" media="screen">
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/latest-entries-big-carousel.js"></script>
+
+
+<div class="big-carousel-wrap">
+	<div class="big-carousel-controls">
+		<div class="big-carousel-left"></div>
+		<div class="big-carousel-right"></div>
+	</div>
+	<div class="big-carousel-content">
+		<div class="big-carousel-wagon">
+		{% for entry in latest_entries %}
+			<div class="big-carousel-item" id="big-carousel-item-{{ forloop.counter }}">
+				<div class="book-entry">
+					<div class="book-entry-wrap">
+						<h4><a href="{{ entry.get_absolute_url }}">{{ entry.title|truncatechars:30 }}</a></h4>
+						<br>
+						<div>{{ entry.body|truncatewords_html:75|safe }}</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+
+

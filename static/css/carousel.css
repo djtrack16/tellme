@@ -1,0 +1,50 @@
+.latest-entries-carousel {
+    height: 220px;
+    line-height: 1;
+}
+
+.latest-entries-carousel .carousel-left,
+.latest-entries-carousel .carousel-right {
+    float:left;
+    width: 8%;
+    height: 220px;
+    cursor:pointer;
+}
+.latest-entries-carousel .carousel-left {
+	background: url("../img/slider_left.png") no-repeat center center;
+}
+.latest-entries-carousel .carousel-right {
+    float:right;
+    background: url("../img/slider_right.png") no-repeat center center;
+}
+.latest-entries-carousel .carousel-rail {
+    position: relative;
+    float:left;   
+    width: 84%;
+    height: 220px;
+    overflow: hidden;
+}
+.latest-entries-carousel .carousel-wagon {
+    position: absolute;
+    margin-right: -15px;
+	height: 220px;
+}
+.latest-entries-carousel .carousel-item {
+    float: left;
+    height: 145px;
+    padding: 25px;
+    margin: 15px;
+    width: 140px;
+    border: 1px solid #CCC;
+    background: white;
+    -moz-box-shadow: 0px 5px 5px -3px #555;
+    -webkit-box-shadow: 0px 5px 5px -3px #555;
+    box-shadow: 0px 5px 5px -3px #555;
+}
+.carousel-item h2 {
+    padding: 5px;
+    color: #616161;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 18px;
+}

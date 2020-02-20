@@ -1,0 +1,54 @@
+.big-carousel-wrap {
+	padding: 60px 0;
+	height: 460px;
+	display: block;
+}
+.big-carousel-content {
+    height: 460px;
+    width: 86%;
+    position: relative;
+    overflow: hidden;
+}
+.big-carousel-wagon {
+	position: absolute;
+}
+.big-carousel-controls {
+	cursor: pointer;
+}
+.big-carousel-left, .big-carousel-right {
+	width: 7%;
+	height: 460px;
+} 
+.big-carousel-left {
+	background: url("../img/slider_left.png") no-repeat center center;
+	float: left;
+}
+
+.big-carousel-right {
+	background: url("../img/slider_right.png") no-repeat center center;
+	float: right;
+}
+.big-carousel-item {
+	display: inline-block;
+	float: left;
+	height: 460px;
+	width: 33%;
+	min-width: 380px;
+}
+.book-entry {
+	padding: 50px;
+	margin: 20px;
+	border: 1px solid #CCC;
+	background: white;
+	
+	-moz-box-shadow: 0px 5px 5px -3px #555;
+	-webkit-box-shadow: 0px 5px 5px -3px #555;
+	box-shadow: 0px 5px 5px -3px #555;
+	
+	overflow: hidden;
+	height: 68%;
+}
+.book-entry-wrap {
+	height: 100%;
+	overflow: hidden;
+}

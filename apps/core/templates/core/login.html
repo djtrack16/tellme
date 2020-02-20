@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+{% load i18n %}
+
+{% block content %}
+	<div class="row">
+		<div class="span4 offset5" id="login-form">
+		<form method="POST" action="." class="well">
+			{% csrf_token %}
+			{{ form }}
+			<input type="hidden" value="{{ next }}">
+			<div class="form-actions">
+            	<button type="submit" class="btn btn-primary">Login</button>
+        	</div>
+		</form>
+		</div>
+	</div>
+{% endblock %}

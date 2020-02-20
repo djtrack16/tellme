@@ -1,0 +1,239 @@
+{% extends "books/base.html" %}
+{% load i18n %}
+{% load core_tags %}
+
+{% block title %}{% trans entry.title %}{% endblock %}
+
+{% block extra_head %}
+	<script type="text/javascript">
+		window.usernames = [{% for username in USERNAMES %}'{{ username }}'{% if not forloop.last %},{% endif %}{% endfor %}]; 
+	</script>
+	<link href="{{ STATIC_URL }}css/panels.css" rel="stylesheet" type="text/css" media="screen">
+	<script type="text/javascript" src="{{ STATIC_URL }}js/editor-panels.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/tinymce-toolbar.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="{% url tinymce-js 'tellme_editor' %}"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-tooltip.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/book_entries.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/share-forms.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/delete.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//$('#delete-book').tooltip({placement:'right'});
+
+		});
+		
+		window.current_entry = '{{ entry.id }}';
+
+		
+	</script>
+
+{% endblock %}
+
+{% block content %}
+<div id="editor-wrap">
+	<div id="left-panel">
+		<div class="hideaway-wrap">
+			<h1>{{ book.title|truncatechars:30 }}
+				<a href="#edit_model_name" class="edit-book-title">
+					<i class="icon-pencil"></i>
+					<input type="hidden" name="book-edit" value="{{ book.id }}">
+				</a>
+				<a data-toggle="modal" href="#book_delete_confirm_modal" class="delete-book">
+					<i class="icon-remove"></i>
+				</a>
+			</h1>
+			<ul class="entry-list">
+				<input type="hidden" name="delete-url" value="{% url books_delete %}">
+				{% for book_entry in book.entry_set.all %}
+					<li class="entry-title">
+						{% if book_entry == entry %}
+						{{ book_entry.title|truncatechars:15 }}
+						{% else %}
+						<a href="{{ book_entry.get_absolute_url }}">{{ book_entry.title|truncatechars:15 }}</a>
+						{% endif %}
+						<!-- ICONS FOR EDITING ENTRY TITLES -->
+						<a class="edit-icon">
+							<i class="icon-pencil"></i>
+							<input type="hidden" name="entry" value="{{ book_entry.id }}">
+							<!--<input type="hidden" name="edit_title_url" value="{% url edit_model_title %}">-->
+						</a>
+						<!-- ICONS FOR DELETING ENTRIES -->
+						<a data-toggle="modal" href="#delete_confirm_modal" class="delete-icon">
+							<i class="icon-remove"></i>
+							<input type="hidden" name="entry" value="{{ book_entry.id }}">
+						</a>
+						<!-- FORM FOR EDITING ENTRY TITLES -->
+						<form action="{% url edit_model_title %}" method="POST" id="edit-entry-form">
+							{% csrf_token %}
+							<fieldset class="control-group error">
+								<label id="edit-entry-errors"></label>
+							</fieldset>
+							<input type="hidden" name="entry" value="{{ entry.id }}"/>
+	    	                <input id="new-title" name="title" data-provide="typeahead" placeholder="New Title"/>
+                    	</form>
+					</li>
+				{% endfor %}
+			</ul>
+			<!-- Left side of the main panel: creating entries -->
+			<div class="panel-actions">
+				<a data-toggle="modal" href="#add_entry_modal" class="btn btn-inverse">{% trans "Add entry" %}</a>
+			</div>
+			<!-- Left side of the main panel: Delete book button in lower-left corner of page -->
+			<div class="bottom-panel-actions">
+				<!--<a href="#book_delete_confirm_modal" data-toggle="modal" rel="tooltip" title="{% trans 'Delete book' %}" id="delete-book"><i class="icon-book"></i></a>-->
+			</div>
+		</div>
+		<a class="hide-panel-control"><img src="{{ STATIC_URL }}img/right-arrow.png"/></a>
+	</div>
+	<div id="rigth-panel">
+		<div class="hideaway-wrap">
+			<h1>{% trans "Who can see" %}</h1>
+			<!-- The list of people you are sharing this book with -->
+			<div class="share-content">
+				<ul class="friend-list" id="book-shared-friend-list">
+					<h4>{{ book.title|truncatechars:20 }}</h4>
+					{% for share in book.shared_set.all %}
+						{% include "share/share_list_block.html" %}
+					{% endfor %}
+				</ul>
+				<!-- Calls the share_book.py when you press the 'Add' to share the book -->
+				<div class="panel-actions">
+					<form action="{% url share_book %}" method="POST" class="share-form" id="share-book-form">
+						{% csrf_token %}
+						<fieldset class="control-group error">
+							<label id="share-form-errors"></label>
+						</fieldset>
+						<input type="hidden" name="book" value="{{ book.id }}"/>
+    	                <input id="share-user" name="user" data-provide="typeahead" placeholder="Username or Email"/>
+                    </form>
+					<a id="add-book-share" class="btn btn-inverse">{% trans "Add" %}</a>
+				</div>
+				<!-- The list of people you are sharing this entry with -->
+				{% if entry %}
+				<ul class="friend-list" id="entry-shared-friend-list">
+					<h4>{{ entry.title|truncatechars:20 }}</h4>
+					{% for share in entry.shared_set.all %}
+						{% include "share/share_list_block.html" %}
+					{% endfor %}
+				</ul>
+				<!-- Calls share_book.py when you press 'Add' to share the entry 
+					Still not sure if you can view the entry shared with you without seeing the entire book -->
+				<div class="panel-actions">
+					<form action="{% url share_book %}" method="POST" class="share-form" id="share-entry-form">
+						{% csrf_token %}
+						<fieldset class="control-group error">
+							<label id="share-form-errors"></label>
+						</fieldset>
+						<input type="hidden" name="entry" value="{{ entry.id }}"/>
+    	                <input id="share-user" name="user" data-provide="typeahead" placeholder="Username or Email"/>
+                    </form>
+					<a id="add-entry-share" class="btn btn-inverse">{% trans "Add" %}</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<!-- The arrow to auto-hide the share list -->
+		<a class="hide-panel-control"><img src="{{ STATIC_URL }}img/left-arrow.png"/></a>
+	</div>
+	<div id="middle-panel">
+		<div id="middle-panel-container">
+		{% if entry %}
+		<!-- Puts the arrow at the top to hide the editing tools: bold, italic, alignment, fonts, etc 
+		Perhaps, this is where tinyMCE comes in! -->
+		<div id="middle-top-panel">
+			<div class="hideaway-wrap">
+			</div>
+			<a class="hide-panel-control"><img src="{{ STATIC_URL }}img/down-arrow.png"/></a>
+		</div>
+		{% endif %}
+		<div id="editor">
+			{% if entry %}
+			 <form action="" method="POST" id="editor-form">
+			 	{% csrf_token %}
+			 	{{ form.body }}
+			 </form>
+			 {% endif %}
+		</div>
+		<!-- Puts the latest entries at the bottom of the page, with the option to hide with the up arrow -->
+		<div id="middle-bottom-panel">
+			<a class="hide-panel-control"><img src="{{ STATIC_URL }}img/up-arrow.png"/></a>
+			<div class="hideaway-wrap">
+				<div class="latest-entries-wrap">
+				{% include "books/latest_entries.html" %}
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- ADD NEW ENTRY -->
+	<div class="modal hide fade" id="add_entry_modal">
+		<div class="modal-header">
+	 		<button class="close" data-dismiss="modal">×</button>
+	 		<h3>{% trans "New entry" %}</h3>
+		</div>
+		<div class="modal-body">
+			<form action="{% url books_add_entry %}" id="new_entry_form">
+				<input type="hidden" name="book_id" value="{{ book.id }}">
+				{{ new_entry_form }}
+				<fieldset class="control-group error">
+					<label id="share-form-errors"></label>
+				</fieldset>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a id="cancel-btn"  data-dismiss="modal" class="btn">{% trans "Cancel" %}</a>
+			<a id="confirm-btn" class="btn btn-primary">{% trans "Add" %}</a>
+		</div>
+	</div>
+	<!-- DELETE AN ENTRY -->
+	<div class="modal hide fade" id="delete_confirm_modal">
+  		<div class="modal-header">
+    		<button class="close" data-dismiss="modal">×</button>
+			<h3>{% trans "Delete Entry" %}</h3>
+  		</div>
+  		<div class="modal-body">
+    		<p>{% trans "Are you sure you want to <b>permanently</b> delete this entry?" %}</p>
+  		</div>
+  		<div class="modal-footer">
+    		<a id="cancel-btn"  data-dismiss="modal" class="btn">{% trans "No" %}</a>
+    		<a id="confirm-btn" data-dismiss="modal" class="btn btn-primary">{% trans "Yes, Delete" %}</a>
+  		</div>
+	</div>
+	<!-- DELETE A BOOK -->
+	<div class="modal hide fade" id="book_delete_confirm_modal">
+  		<div class="modal-header">
+    		<button class="close" data-dismiss="modal">×</button>
+			<h3>{% trans "Delete Book" %}</h3>
+  		</div>
+  		<div class="modal-body">
+    		<p>{% trans "Are you sure you want to <b>permanently</b> delete this book?" %}</p>
+  		</div>
+  		<div class="modal-footer">
+    		<a id="cancel-btn"  data-dismiss="modal" class="btn">{% trans "No" %}</a>
+    		<a id="confirm-btn" data-dismiss="modal" class="btn btn-primary">{% trans "Yes, Delete" %}</a>
+  		</div>
+  		<input type="hidden" name="book_delete_url" value="{% url books_book_delete %}"/>
+  		<input type="hidden" name="book" value="{{ book.id }}"/>
+	</div>
+	<!-- SEND INVITATION TO FRIEND TO USE NENJAH -->
+	<div class="modal hide fade" id="send_invitation_modal" data-toggle="modal">
+		<div class="modal-header">
+    		<button class="close" data-dismiss="modal">×</button>
+			<h3>{% trans "User not found!" %}</h3>
+  		</div>
+  		<div class="modal-body">
+    		<p>{% trans "Send an invitation to " %}<span id="to_user"></span>?</p>
+  		</div>
+  		<div class="modal-footer">
+    		<a id="cancel-btn"  data-dismiss="modal" class="btn">{% trans "Cancel" %}</a>
+    		<a id="confirm-btn" data-dismiss="modal" class="btn btn-primary">{% trans "Send" %}</a>
+  		</div>
+  		<input type="hidden" name="share_send_invitation_url" value="{% url send_invitation %}"/>
+  		<input type="hidden" name="invitation_user_from" value="{{ user.profile.get_full_name }}"/>
+		<input type="hidden" name="invitation_mail_to" value=""/>
+	</div>
+</div>
+{% endblock %}

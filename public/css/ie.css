@@ -1,0 +1,11 @@
+#middle-panel #middle-bottom-panel {
+	bottom: -122px;
+}
+
+#menubar,
+#left-panel,
+#rigth-panel,
+#books-cover-tray-wrap,
+.book-entry {
+	/* behavior: url("/public/css/pie/PIE.htc"); */
+}

@@ -1,0 +1,66 @@
+.books-carousel {
+    height: 230px;
+	background: url("../img/books-tray-bg.png") repeat-x bottom center;
+}
+.carousel-header {
+    margin-bottom: 10px;
+}
+.carousel-left, .carousel-right {
+    float:left;
+    width: 42px;
+    height: 230px;
+    cursor: pointer;
+}
+.carousel-left {
+	background: url("../img/thin-left-arrow.png") no-repeat center center;
+}
+.carousel-right {
+    float:right;
+    background: url("../img/thin-right-arrow.png") no-repeat center center;
+}
+.carousel-rail {
+    position: relative;
+    float:left;   
+    width: 92%;
+    height: 230px;
+    overflow: hidden;
+}
+.carousel-wagon {
+    position: absolute;
+    margin-right: -15px; 
+}
+.carousel-item {
+    float: left;
+    margin: 35px 45px;
+	-moz-box-shadow: 0px 5px 5px -3px #555;
+	-webkit-box-shadow: 0px 5px 5px -3px #555;
+	box-shadow: 0px 5px 5px -3px #555;
+	background: url("../img/book_cover.png") no-repeat center center;
+	width: 120px;
+	line-height: 175px;
+	text-align: center;
+}
+.carousel-item .book-title {
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	padding: 0 30px;
+	font-size: 12px;
+	position: relative;
+	top: 3px;
+}
+.carousel-item article {
+    padding: 4px;
+    height: 190px;
+    background: #fff;
+}
+.carousel-item img {
+    display:block;
+}
+.carousel-item h2 {
+    padding: 5px;
+    color: #616161;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 18px;
+}

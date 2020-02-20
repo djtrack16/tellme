@@ -1,0 +1,21 @@
+{% extends "books/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Create a new book" %}{% endblock %}
+
+{% block m_canvas %}menu-btn-active{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="span4 offset5" id="login-form">
+	 		<form action="{% url books_add_book %}" method="POST" class="well form-vertical">
+	 			{% csrf_token %}
+	 			{{ form }}
+	 			<div class="form-actions">
+					<button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
+					<button type="reset" class="btn btn-secondary">{% trans "Reset" %}</button>
+				</div>
+	 		</form>
+		</div>
+	</div>
+{% endblock %}

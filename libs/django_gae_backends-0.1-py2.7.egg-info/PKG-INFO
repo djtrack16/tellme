@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: django-gae-backends
+Version: 0.1
+Summary: Django Backends for the Google App Engine
+Home-page: https://github.com/devsar/django-gae-backends
+Author: Sebastian Serrano
+Author-email: sebastian@devsar.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN

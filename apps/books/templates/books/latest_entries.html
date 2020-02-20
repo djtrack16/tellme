@@ -1,0 +1,26 @@
+{% load core_tags %}
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/carousel.css"/>
+<script type="text/javascript" src="{{ STATIC_URL }}js/carousel/carousel.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.latest-entries-carousel').carousel();
+	});
+</script>
+
+<div class="latest-entries-carousel">
+	<div class="carousel-left"></div>
+	<div class="carousel-rail">
+		<div class="carousel-wagon">
+			{% for entry in latest_entries %}
+			<div class="carousel-item">
+         		<a href="{{ entry.get_absolute_url }}">{{ entry.title|truncatechars:21 }}</a>
+         		<br><br>
+				{{ entry.body|striptags|truncatewords:20|safe}}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div class="carousel-right"></div>
+</div>
