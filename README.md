@@ -5,6 +5,6 @@ Picture you and your friends have a travel adventure, road trip, wedding or othe
 
 I worked on this project on and off for 2 years after college with a 3-person team.
 I worked across the full stack, doing Javascript/HTML/CSS, Python (Djanjo), alogn with MySQL. We also used Bootstrap and Memcached, with Google App Engine.
-I primarily designed and built features to share journals and entries, user login and authentication, notifications, and error handling, etc.
+As a full-stack engineer, I primarily designed and built features to share journals and entries, user login and authentication, notifications, and error handling, etc.
 
 We applied to StartX in 2013, the Stanford startup accelerator, but were not accepted.
